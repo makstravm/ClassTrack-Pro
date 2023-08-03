@@ -1,5 +1,9 @@
-import { Container, Grid, Paper } from "@mui/material";
+import { Box, Container, Grid, Paper } from "@mui/material";
 import { Header } from "./components/Header";
+import { Main } from "./components/Main";
+import NumbersIcon from "@mui/icons-material/Numbers";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 function getCurrentDate() {
   const today = new Date();
@@ -8,30 +12,42 @@ function getCurrentDate() {
 }
 
 const Item = () => (
-  <Grid container py={2} spacing={3} justifyContent={"center"}>
-    <Grid item>Data</Grid>
-    <Grid item> -500</Grid>
-    <Grid item>Total Now</Grid>
-  </Grid>
+  <Box
+    p={3}
+    sx={{
+      background: "#ececec",
+      display: "flex",
+      justifyContent: "center",
+      fontWeight: "bold",
+    }}
+  >
+    <Grid container spacing={3} justifyContent={"space-around"}>
+      <Grid item px={2}>
+        <NumbersIcon />
+      </Grid>
+      <Grid item px={2}>
+        Data
+      </Grid>
+      <Grid item px={2}>
+        Price
+      </Grid>
+      <Grid item px={2}>
+        Total Now
+      </Grid>
+      <Grid item px={2}>
+        isPaid
+        <CheckCircleIcon style={{ color: "green" }} />
+        <CancelIcon style={{ color: "red" }} />
+      </Grid>
+    </Grid>
+  </Box>
 );
-
 const App = () => (
   <Container>
     <Header />
-    <main>
-      <h2>Some title</h2>
-      <div>My balance</div>
+    <Main>
       <Item />
-      <section>
-        <p> I want to const row with Datw, pay and etc. </p>
-        <p>There should be mapping data and add new.</p>
-        <Grid>
-          <div>data</div>
-          <div>500</div>
-          <div>Total</div>
-        </Grid>
-      </section>
-    </main>
+    </Main>
   </Container>
 );
 
