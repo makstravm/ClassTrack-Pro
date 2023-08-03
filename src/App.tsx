@@ -1,6 +1,5 @@
 import { Container, Grid, Paper } from "@mui/material";
-
-const Header = () => <header>Header</header>;
+import { Header } from "./components/Header";
 
 function getCurrentDate() {
   const today = new Date();
@@ -17,25 +16,23 @@ const Item = () => (
 );
 
 const App = () => (
-  <Paper elevation={6}>
-    <Container>
-      <Header />
-      <main>
-        <h2>Some title</h2>
-        <div>My balance</div>
-        <Item />
-        <section>
-          <p> I want to const row with Datw, pay and etc. </p>
-          <p>There should be mapping data and add new.</p>
-          <Grid>
-            <div>data</div>
-            <div>500</div>
-            <div>Total</div>
-          </Grid>
-        </section>
-      </main>
-    </Container>
-  </Paper>
+  <Container>
+    <Header />
+    <main>
+      <h2>Some title</h2>
+      <div>My balance</div>
+      <Item />
+      <section>
+        <p> I want to const row with Datw, pay and etc. </p>
+        <p>There should be mapping data and add new.</p>
+        <Grid>
+          <div>data</div>
+          <div>500</div>
+          <div>Total</div>
+        </Grid>
+      </section>
+    </main>
+  </Container>
 );
 
 export default App;
