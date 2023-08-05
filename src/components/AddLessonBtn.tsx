@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useLessonsContext } from "../context/lessonsContext";
 
@@ -6,7 +6,7 @@ export const AddLessonBtn = () => {
   const { addLesson } = useLessonsContext();
 
   return (
-    <div>
+    <Box textAlign={"center"} py={2}>
       <Button
         onClick={addLesson}
         startIcon={<AddIcon fontSize="small" />}
@@ -14,6 +14,6 @@ export const AddLessonBtn = () => {
       >
         Add Lesson
       </Button>
-    </div>
+    </Box>
   );
 };
