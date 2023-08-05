@@ -5,38 +5,54 @@ import {
   useEffect,
   useState,
 } from "react";
-import { getSum } from "../api/header";
+import { getSumDB, updatePriceDB } from "../api/header";
 import { ISum } from "../types";
 
 interface IProps {
   children: ReactNode;
 }
 
-// interface IInitialISumContextPropsState {}
-
 interface ISumContextProps {
-  sum: ISum | null;
+  sum: ISum;
+  updatePrice: (price: number) => void;
 }
 
+export const initialSum: ISum = {
+  priceForLesson: 0,
+  currentSum: 0,
+  totalSum: 0,
+};
+
 const initialState = {
-  sum: null,
+  sum: initialSum,
+  updatePrice: () => {},
 };
 
 const SumContext = createContext<ISumContextProps>(initialState);
 
 export const SumProvider = ({ children }: IProps) => {
-  const [sum, setSum] = useState<ISum | null>(null);
+  const [sum, setSum] = useState<ISum>(initialSum);
 
-  const getSumData = async () => {
-    const res = await getSum();
+  const getSum = async () => {
+    const res = await getSumDB();
     setSum(res);
   };
 
+  const updatePrice = async (val: number) => {
+    await updatePriceDB({ priceForLesson: val }, () =>
+      setSum({ ...sum, priceForLesson: val })
+    );
+  };
+
   useEffect(() => {
-    getSumData();
+    getSum();
   }, []);
 
-  return <SumContext.Provider value={{ sum }}>{children}</SumContext.Provider>;
+  return (
+    <SumContext.Provider value={{ sum, updatePrice }}>
+      {children}
+    </SumContext.Provider>
+  );
 };
 
 export const useSumContext = (): ISumContextProps => useContext(SumContext);
