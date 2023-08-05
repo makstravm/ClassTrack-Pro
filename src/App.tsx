@@ -4,13 +4,7 @@ import { Main } from "./components/Main";
 import NumbersIcon from "@mui/icons-material/Numbers";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { useState } from "react";
 import { AddLessonBtn } from "./components/AddLessonBtn";
-function getCurrentDate() {
-  const today = new Date();
-  const formattedDate = today.toLocaleDateString("ru-RU"); // Using 'en-GB' locale for dd.mm.yyyy format
-  return formattedDate;
-}
 
 const Item = () => {
   return (

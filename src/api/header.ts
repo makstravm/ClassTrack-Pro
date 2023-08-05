@@ -23,3 +23,16 @@ export const updatePriceDB = async (
     return initialSum;
   }
 };
+export const updateCurrentSumDB = async (
+  newSum: Pick<ISum, "currentSum">,
+  cb: () => void
+) => {
+  try {
+    console.log(3);
+    await updateDoc(doc(db, "sum", "tK7romW0nc7zx4jTkdXp"), newSum);
+    console.log(4);
+    cb();
+  } catch (e) {
+    return initialSum;
+  }
+};
