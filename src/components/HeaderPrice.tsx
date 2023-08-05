@@ -1,6 +1,7 @@
 import { TextField, Typography } from "@mui/material";
 import { useState } from "react";
 
+import EditIcon from "@mui/icons-material/Edit";
 interface IProps {
   color: string;
   valueDefault: number;
@@ -34,6 +35,7 @@ export const EditPrice = ({ color, valueDefault }: IProps) => {
           color={color}
         >
           {valueDefault}
+          <EditIcon fontSize="small" color="secondary" />
         </Typography>
       ) : (
         <TextField
