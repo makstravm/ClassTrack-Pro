@@ -1,12 +1,25 @@
 import { ISum } from "./../types/index";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import { initialSum } from "../context/sumContext";
 
-export const getSum = async () => {
+export const getSumDB = async () => {
   const res = await getDoc(doc(db, "sum", "tK7romW0nc7zx4jTkdXp"));
   if (res.exists()) {
     return res.data() as ISum;
   } else {
-    return null;
+    return initialSum;
+  }
+};
+
+export const updatePriceDB = async (
+  newSum: Pick<ISum, "priceForLesson">,
+  cb: () => void
+) => {
+  try {
+    await updateDoc(doc(db, "sum", "tK7romW0nc7zx4jTkdXp"), newSum);
+    cb();
+  } catch (e) {
+    return initialSum;
   }
 };

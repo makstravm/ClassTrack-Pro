@@ -1,14 +1,24 @@
 import { TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import EditIcon from "@mui/icons-material/Edit";
+import { useSumContext } from "../context/sumContext";
 interface IProps {
   color: string;
   valueDefault: number;
 }
-export const EditPrice = ({ color, valueDefault }: IProps) => {
+export const EditPrice = ({ color }: IProps) => {
+  const {
+    sum: { priceForLesson },
+    updatePrice,
+  } = useSumContext();
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [value, setValue] = useState<number>(valueDefault);
+
+  const [value, setValue] = useState<number>(priceForLesson);
+
+  useEffect(() => {
+    setValue(priceForLesson);
+  }, [priceForLesson]);
 
   const onChangeValue = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -17,12 +27,18 @@ export const EditPrice = ({ color, valueDefault }: IProps) => {
     if (typeof inputValue === "number" && !isNaN(inputValue))
       setValue(inputValue);
   };
+
   const onPressEnter = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter") changePrice();
   };
+
   const changePrice = () => {
+    if (priceForLesson !== value) {
+      updatePrice(value);
+    }
     setIsEdit(!isEdit);
   };
+
   return (
     <>
       {!isEdit ? (
@@ -34,7 +50,7 @@ export const EditPrice = ({ color, valueDefault }: IProps) => {
           onDoubleClick={() => setIsEdit(!isEdit)}
           color={color}
         >
-          {valueDefault}
+          {priceForLesson}
           <EditIcon fontSize="small" color="secondary" />
         </Typography>
       ) : (

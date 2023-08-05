@@ -5,7 +5,7 @@ export const sortObjectKeys = (obj: {
 } => {
   const sortedKeys = Object.keys(obj).sort().reverse();
 
-  const sortedObject: { [key: string]: any } = {};
+  const sortedObject: { [key: string]: number } = {};
   for (const key of sortedKeys) {
     sortedObject[key] = obj[key];
   }

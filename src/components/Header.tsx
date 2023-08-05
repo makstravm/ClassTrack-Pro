@@ -11,10 +11,9 @@ const textHeader: Record<string, string> = {
 };
 
 const HeaderItem = () => {
-  const sumInit = useSumContext();
-  const sum = useMemo(() => sumInit?.sum || {}, [sumInit]);
+  const { sum } = useSumContext();
 
-  const sortSum = useMemo(() => sortObjectKeys(sum), [sum]);
+  const sortSum = useMemo(() => sortObjectKeys(sum as any), [sum]);
   const isPriceField = (par: string) => par === "priceForLesson";
   const getColor = (par: string) =>
     par === "totalSum" ? "#04d003de" : "#003eff";
