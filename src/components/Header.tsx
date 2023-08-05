@@ -1,7 +1,8 @@
-import { Grid, Paper, Typography } from "@mui/material";
+import { Grid, Paper, TextField, Typography } from "@mui/material";
 import { useSumContext } from "../context/sumContext";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { sortObjectKeys } from "../utils/sortObjectKeys";
+import { EditPrice } from "./HeaderPrice";
 
 const textHeader: Record<string, string> = {
   totalSum: "Total spent sum",
@@ -14,7 +15,7 @@ const HeaderItem = () => {
   const sum = useMemo(() => sumInit?.sum || {}, [sumInit]);
 
   const sortSum = useMemo(() => sortObjectKeys(sum), [sum]);
-
+  const isPriceField = (par: string) => par === "priceForLesson";
   const getColor = (par: string) =>
     par === "totalSum" ? "#04d003de" : "#003eff";
 
@@ -23,16 +24,22 @@ const HeaderItem = () => {
       {sum &&
         Object.entries(sortSum).map(([name, value]) => (
           <Grid item textAlign="center" key={name}>
-            <Typography variant="h6">{textHeader[name]}</Typography>
-            <Typography
-              component={"span"}
-              textAlign={"center"}
-              variant="h5"
-              fontWeight={"bold"}
-              color={getColor(name)}
-            >
-              {value}
+            <Typography px={1} variant="h6">
+              {textHeader[name]}
             </Typography>
+            {!isPriceField(name) ? (
+              <Typography
+                component={"span"}
+                textAlign={"center"}
+                variant="h5"
+                fontWeight={"bold"}
+                color={getColor(name)}
+              >
+                {value}
+              </Typography>
+            ) : (
+              <EditPrice color={getColor(name)} valueDefault={value} />
+            )}
             <Typography
               component="span"
               textAlign={"center"}
