@@ -55,6 +55,7 @@ export const EditPrice = ({ color }: IProps) => {
         </Typography>
       ) : (
         <TextField
+          autoFocus
           size="small"
           value={value}
           onChange={onChangeValue}

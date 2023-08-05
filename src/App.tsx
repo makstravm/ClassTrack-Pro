@@ -3,6 +3,7 @@ import { Header } from "./components/Header";
 import { Main } from "./components/Main";
 import { AddLessonBtn } from "./components/AddLessonBtn";
 import { LessonsListWrapper } from "./components/LessonsListWrapper";
+import { AddFunds } from "./components/AddFunds";
 
 const App = () => (
   <Container>
@@ -11,6 +12,7 @@ const App = () => (
       <LessonsListWrapper />
       <AddLessonBtn />
     </Main>
+    <AddFunds />
   </Container>
 );
 
