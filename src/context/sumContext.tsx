@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { getSumDB, updatePriceDB } from "../api/header";
+import { getSumDB, updateCurrentSumDB, updatePriceDB } from "../api/header";
 import { ISum } from "../types";
 
 interface IProps {
@@ -14,7 +14,8 @@ interface IProps {
 
 interface ISumContextProps {
   sum: ISum;
-  updatePrice: (price: number) => void;
+  updatePrice: (par: number) => void;
+  updateCurrentSum: (par: number) => void;
 }
 
 export const initialSum: ISum = {
@@ -26,6 +27,7 @@ export const initialSum: ISum = {
 const initialState = {
   sum: initialSum,
   updatePrice: () => {},
+  updateCurrentSum: () => {},
 };
 
 const SumContext = createContext<ISumContextProps>(initialState);
@@ -44,12 +46,19 @@ export const SumProvider = ({ children }: IProps) => {
     );
   };
 
+  const updateCurrentSum = async (currentSum: number) => {
+    console.log(2);
+    await updateCurrentSumDB({ currentSum }, () =>
+      setSum({ ...sum, currentSum })
+    );
+  };
+
   useEffect(() => {
     getSum();
   }, []);
 
   return (
-    <SumContext.Provider value={{ sum, updatePrice }}>
+    <SumContext.Provider value={{ sum, updatePrice, updateCurrentSum }}>
       {children}
     </SumContext.Provider>
   );

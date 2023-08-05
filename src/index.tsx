@@ -6,7 +6,7 @@ import "./index.css";
 import "./firebase";
 import { CssBaseline } from "@mui/material";
 import { SumProvider } from "./context/sumContext";
-import { LessonsProvider } from "./context/lesonsContext";
+import { LessonsProvider } from "./context/lessonsContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
