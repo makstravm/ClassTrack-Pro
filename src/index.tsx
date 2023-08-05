@@ -5,6 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import "./firebase";
 import { CssBaseline } from "@mui/material";
+import { SumProvider } from "./context/sumContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -12,7 +13,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <CssBaseline />
-    <App />
+    <SumProvider>
+      <App />
+    </SumProvider>
   </React.StrictMode>
 );
 
