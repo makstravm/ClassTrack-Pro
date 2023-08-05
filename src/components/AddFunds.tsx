@@ -10,10 +10,12 @@ import {
 } from "@mui/material";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { useState } from "react";
+import { useSumContext } from "../context/sumContext";
 
 export const AddFunds = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<number>(0);
+  const { addFunds } = useSumContext();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,6 +28,8 @@ export const AddFunds = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const onAddFunds = () => addFunds(value);
 
   return (
     <Box sx={{ position: "fixed", bottom: "3vw", right: "3vw" }}>
@@ -60,7 +64,7 @@ export const AddFunds = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Add Funds</Button>
+          <Button onClick={onAddFunds}>Add Funds</Button>
         </DialogActions>
       </Dialog>
     </Box>
