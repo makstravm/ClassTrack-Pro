@@ -10,12 +10,12 @@ import {
 } from "@mui/material";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { useState } from "react";
-import { useSumContext } from "../context/sumContext";
+import { useLessonsContext } from "../context/lessonsContext";
 
 export const AddFunds = () => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<number>(0);
-  const { addFunds } = useSumContext();
+  const [value, setValue] = useState<number>(500);
+  const { updateIsPaidForLesson } = useLessonsContext();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,7 +29,9 @@ export const AddFunds = () => {
     setOpen(false);
   };
 
-  const onAddFunds = () => addFunds(value);
+  const onAddFunds = () => {
+    updateIsPaidForLesson(value);
+  };
 
   return (
     <Box sx={{ position: "fixed", bottom: "3vw", right: "3vw" }}>

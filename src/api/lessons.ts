@@ -1,13 +1,12 @@
 import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { initialSum } from "../context/sumContext";
-import { ILessons } from "../context/lessonsContext";
+import { ILessons, initialLessons } from "../context/lessonsContext";
 
 export const addLessonDB = async (lesson: ILessons) => {
   try {
     await setDoc(doc(db, "lessons", lesson.id), lesson);
   } catch (e) {
-    return initialSum;
+    return initialLessons;
   }
 };
 
@@ -20,6 +19,14 @@ export const getLessonsDB = async () => {
     });
     return lessons;
   } catch (e) {
-    return initialSum;
+    return initialLessons;
+  }
+};
+
+export const updateIsPaidForLessonDB = async ({ id, ...rest }: ILessons) => {
+  try {
+    await setDoc(doc(db, "lessons", id), { ...rest });
+  } catch (e) {
+    return initialLessons;
   }
 };

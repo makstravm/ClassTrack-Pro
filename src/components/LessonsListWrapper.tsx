@@ -18,6 +18,7 @@ const Lesson = (props: IProps) => {
   ) : (
     <CancelIcon style={{ color: "red" }} />
   );
+
   return (
     <Box
       p={3}
@@ -40,7 +41,9 @@ const Lesson = (props: IProps) => {
           {lesson?.price ? lesson?.price : "Price"}
         </Grid>
         <Grid item xs={2} px={2} textAlign={"center"}>
-          {lesson?.currentSum ? lesson?.currentSum : "Total"}
+          {typeof lesson?.currentSum === "number"
+            ? lesson?.currentSum
+            : "Total"}
         </Grid>
         <Grid item xs={2} px={2} textAlign={"center"}>
           {!index ? "isPaid" : icon}
