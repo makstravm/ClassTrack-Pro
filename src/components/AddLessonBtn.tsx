@@ -10,7 +10,7 @@ export const AddLessonBtn = () => {
   const { addLesson, lessons } = useLessonsContext();
   const { show, isVisible, hide } = useModal();
   const date = getCurrentDate();
-  const onClick = () => {
+  const handleOnClick = () => {
     addLesson();
     hide();
   };
@@ -33,7 +33,7 @@ export const AddLessonBtn = () => {
         title={`Lesson -  ${date}`}
         content={`Do you really want to add a lesson for ${date}?`}
         titleBtnAgree="Add lesson"
-        onClick={onClick}
+        onClick={handleOnClick}
         isVisible={isVisible}
         hide={hide}
       />
