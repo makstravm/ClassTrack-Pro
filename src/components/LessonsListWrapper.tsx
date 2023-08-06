@@ -1,17 +1,21 @@
+import { ILessons } from "../types";
+import { Box, Grid } from "@mui/material";
 import NumbersIcon from "@mui/icons-material/Numbers";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useLessonsContext } from "../context/lessonsContext";
-import { Box, Grid } from "@mui/material";
-import { ILessons } from "../types";
+import { useState } from "react";
+import { DeleteBtn } from "./DeleteBtn";
 
 type IProps = {
-  lesson?: Omit<ILessons, "id">;
+  lesson?: ILessons;
   index?: number;
 };
 
 const Lesson = (props: IProps) => {
   const { index, lesson } = props;
+  const [isHover, setIsHover] = useState<boolean>(false);
+  const { delLesson } = useLessonsContext();
   const getBcgHEX = () => (index && index % 2 ? "#fff" : "#cdcdcd");
 
   const icon = lesson?.isPaid ? (
@@ -20,35 +24,60 @@ const Lesson = (props: IProps) => {
     <CancelIcon style={{ color: "red" }} />
   );
 
+  const handleMouseEnter = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    if (index) {
+      setIsHover(true);
+    }
+  };
+
+  const handleMouseLeave = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    if (index) {
+      setIsHover(false);
+    }
+  };
   return (
     <Box
       p={3}
+      pr={6}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       sx={{
         background: index ? getBcgHEX() : "#565656",
         display: "flex",
         justifyContent: "center",
         color: index ? "#000" : "#fff",
         fontWeight: "bold",
+        boxShadow: isHover ? "0px 0px 10px 2px #565656 " : "none",
+        position: "relative",
       }}
     >
       <Grid container spacing={3} justifyContent={"space-around"}>
-        <Grid item xs={2} px={2} textAlign={"center"}>
+        <Grid item xs={1} px={2} textAlign={"center"}>
           {index ? index : <NumbersIcon />}
         </Grid>
         <Grid item xs={2} px={2} textAlign={"center"}>
           {lesson?.date ? lesson?.date : "Date"}
         </Grid>
-        <Grid item xs={2} px={2} textAlign={"center"}>
+        <Grid item xs={1} px={2} textAlign={"center"}>
           {lesson?.price ? lesson?.price : "Price"}
         </Grid>
-        <Grid item xs={2} px={2} textAlign={"center"}>
+        <Grid item xs={1} px={2} textAlign={"center"}>
           {typeof lesson?.currentSum === "number"
             ? lesson?.currentSum
             : "Total"}
         </Grid>
-        <Grid item xs={2} px={2} textAlign={"center"}>
+        <Grid item px={2} textAlign={"center"}>
           {!index ? "isPaid" : icon}
         </Grid>
+        {isHover && lesson?.date && (
+          <DeleteBtn date={lesson.date} onClick={() => delLesson(lesson)} />
+        )}
       </Grid>
     </Box>
   );

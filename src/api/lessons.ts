@@ -1,4 +1,10 @@
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import { initialLessons } from "../context/lessonsContext";
 import { ILessons } from "../types";
@@ -11,6 +17,13 @@ export const addLessonDB = async (lesson: ILessons) => {
   }
 };
 
+export const delLessonDB = async (lesson: ILessons) => {
+  try {
+    await deleteDoc(doc(db, "lessons", lesson.id));
+  } catch (e) {
+    return initialLessons;
+  }
+};
 export const getLessonsDB = async () => {
   try {
     const res = await getDocs(collection(db, "lessons"));
