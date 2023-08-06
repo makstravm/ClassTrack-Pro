@@ -15,7 +15,7 @@ export const Main = ({ children }: Props) => {
         Simple Lessons Counter
       </Typography>
       <Typography variant="body1" py={2} textAlign={"center"} color="#11219c">
-        Simple Lessons Counter{" "}
+        Last the add funds
         <Typography
           component={"span"}
           variant="body1"
