@@ -12,16 +12,10 @@ import {
 } from "../api/lessons";
 import { useSumContext } from "./sumContext";
 import { getCurrentDate } from "../utils/getCurrentDate";
+import { ILessons } from "../types";
 
 interface IProps {
   children: ReactNode;
-}
-export interface ILessons {
-  id: string;
-  currentSum: number;
-  date: string;
-  isPaid: boolean;
-  price: number;
 }
 
 interface ILessonsContext {

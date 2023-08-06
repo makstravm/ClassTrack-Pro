@@ -1,8 +1,9 @@
 import NumbersIcon from "@mui/icons-material/Numbers";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { ILessons, useLessonsContext } from "../context/lessonsContext";
+import { useLessonsContext } from "../context/lessonsContext";
 import { Box, Grid } from "@mui/material";
+import { ILessons } from "../types";
 
 type IProps = {
   lesson?: Omit<ILessons, "id">;

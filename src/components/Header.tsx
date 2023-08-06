@@ -21,35 +21,39 @@ const HeaderItem = () => {
   return (
     <>
       {sum &&
-        Object.entries(sortSum).map(([name, value]) => (
-          <Grid item textAlign="center" key={name}>
-            <Typography px={1} variant="h6">
-              {textHeader[name]}
-            </Typography>
-            {!isPriceField(name) ? (
-              <Typography
-                component={"span"}
-                textAlign={"center"}
-                variant="h5"
-                fontWeight={"bold"}
-                color={getColor(name)}
-              >
-                {value}
-              </Typography>
-            ) : (
-              <EditPrice color={getColor(name)} valueDefault={value} />
-            )}
-            <Typography
-              component="span"
-              textAlign={"center"}
-              variant="h5"
-              color={"#003eff"}
-              pl={1}
-            >
-              UAH
-            </Typography>
-          </Grid>
-        ))}
+        Object.entries(sortSum).map(([name, value]) => {
+          if (name !== "lastAddFunds") {
+            return (
+              <Grid item textAlign="center" key={name}>
+                <Typography px={1} variant="h6">
+                  {textHeader[name]}
+                </Typography>
+                {!isPriceField(name) ? (
+                  <Typography
+                    component={"span"}
+                    textAlign={"center"}
+                    variant="h5"
+                    fontWeight={"bold"}
+                    color={getColor(name)}
+                  >
+                    {value}
+                  </Typography>
+                ) : (
+                  <EditPrice color={getColor(name)} valueDefault={value} />
+                )}
+                <Typography
+                  component="span"
+                  textAlign={"center"}
+                  variant="h5"
+                  color={"#003eff"}
+                  pl={1}
+                >
+                  UAH
+                </Typography>
+              </Grid>
+            );
+          }
+        })}
     </>
   );
 };
