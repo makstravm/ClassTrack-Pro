@@ -1,5 +1,5 @@
 import { ISum } from "./../types/index";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { initialSum } from "../context/sumContext";
 
@@ -8,6 +8,15 @@ export const getSumDB = async () => {
   if (res.exists()) {
     return res.data() as ISum;
   } else {
+    return initialSum;
+  }
+};
+
+export const addFundsDB = async (newSum: ISum, cb: () => void) => {
+  try {
+    await setDoc(doc(db, "sum", "tK7romW0nc7zx4jTkdXp"), newSum);
+    cb();
+  } catch (e) {
     return initialSum;
   }
 };
@@ -23,14 +32,13 @@ export const updatePriceDB = async (
     return initialSum;
   }
 };
+
 export const updateCurrentSumDB = async (
   newSum: Pick<ISum, "currentSum">,
   cb: () => void
 ) => {
   try {
-    console.log(3);
     await updateDoc(doc(db, "sum", "tK7romW0nc7zx4jTkdXp"), newSum);
-    console.log(4);
     cb();
   } catch (e) {
     return initialSum;
