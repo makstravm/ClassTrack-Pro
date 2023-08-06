@@ -4,21 +4,28 @@ import { useLessonsContext } from "../context/lessonsContext";
 import { Modal } from "./Modal";
 import { getCurrentDate } from "../utils/getCurrentDate";
 import useModal from "../hooks/useModal";
+import { useMemo } from "react";
 
 export const AddLessonBtn = () => {
-  const { addLesson } = useLessonsContext();
+  const { addLesson, lessons } = useLessonsContext();
   const { show, isVisible, hide } = useModal();
   const date = getCurrentDate();
   const onClick = () => {
     addLesson();
     hide();
   };
+
+  const isDisabled = useMemo(
+    () => lessons.find((l) => l.date === date),
+    [lessons, date]
+  );
   return (
     <Box textAlign={"center"} py={2}>
       <Button
         onClick={show}
         startIcon={<AddIcon fontSize="small" />}
         variant="outlined"
+        disabled={!!isDisabled}
       >
         Add Lesson
       </Button>
