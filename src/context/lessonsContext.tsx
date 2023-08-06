@@ -7,6 +7,7 @@ import {
 } from "react";
 import {
   addLessonDB,
+  delLessonDB,
   getLessonsDB,
   updateIsPaidForLessonDB,
 } from "../api/lessons";
@@ -21,11 +22,13 @@ interface IProps {
 interface ILessonsContext {
   lessons: ILessons[];
   addLesson: () => void;
+  delLesson: (lesson: ILessons) => void;
   updateIsPaidForLesson: (par: number) => void;
 }
 export const initialLessons = {
   lessons: [],
   addLesson: () => {},
+  delLesson: () => {},
   updateIsPaidForLesson: (par: number) => {},
 };
 
@@ -79,13 +82,18 @@ export const LessonsProvider = ({ children }: IProps) => {
     setLessons(newLessons);
   };
 
+  const delLesson = (lesson: ILessons) => {
+    delLessonDB(lesson);
+    updateCurrentSum(currentSum + lesson.price);
+    setLessons(lessons.filter((l) => l.id !== lesson.id));
+  };
   useEffect(() => {
     getLessons();
   }, []);
 
   return (
     <LessonsContext.Provider
-      value={{ lessons, addLesson, updateIsPaidForLesson }}
+      value={{ lessons, addLesson, updateIsPaidForLesson, delLesson }}
     >
       {children}
     </LessonsContext.Provider>

@@ -8,14 +8,14 @@ import { useState } from "react";
 import { DeleteBtn } from "./DeleteBtn";
 
 type IProps = {
-  lesson?: Omit<ILessons, "id">;
+  lesson?: ILessons;
   index?: number;
 };
 
 const Lesson = (props: IProps) => {
   const { index, lesson } = props;
   const [isHover, setIsHover] = useState<boolean>(false);
-
+  const { delLesson } = useLessonsContext();
   const getBcgHEX = () => (index && index % 2 ? "#fff" : "#cdcdcd");
 
   const icon = lesson?.isPaid ? (
@@ -76,7 +76,7 @@ const Lesson = (props: IProps) => {
           {!index ? "isPaid" : icon}
         </Grid>
         {isHover && lesson?.date && (
-          <DeleteBtn date={lesson.date} onClick={() => {}} />
+          <DeleteBtn date={lesson.date} onClick={() => delLesson(lesson)} />
         )}
       </Grid>
     </Box>
