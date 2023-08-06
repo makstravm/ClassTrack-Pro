@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import {
   Button,
   Dialog,
@@ -7,24 +7,25 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { useModalContext } from "../context/modalContext";
 
 interface IProps {
   title: string;
   titleBtnAgree: string;
   content: string;
-  onClick?: () => void;
+  isVisible: boolean;
+  onClick: () => void;
+  hide: () => void;
   children?: ReactNode;
 }
 export const Modal = ({
+  isVisible,
+  hide,
   title,
   content,
   onClick,
   children,
   titleBtnAgree,
 }: IProps) => {
-  const { isVisible, hide } = useModalContext();
-
   return (
     <Dialog open={isVisible} onClose={hide}>
       <DialogTitle>{title}</DialogTitle>

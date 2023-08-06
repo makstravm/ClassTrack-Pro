@@ -3,12 +3,12 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { useState } from "react";
 import { useLessonsContext } from "../context/lessonsContext";
 import { Modal } from "./Modal";
-import { useModalContext } from "../context/modalContext";
+import useModal from "../hooks/useModal";
 
 export const AddFunds = () => {
   const [value, setValue] = useState<number>(500);
   const { updateIsPaidForLesson } = useLessonsContext();
-  const { show, hide } = useModalContext();
+  const { show, isVisible, hide } = useModal();
 
   const onChangeValue = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -33,6 +33,8 @@ export const AddFunds = () => {
         onClick={addFunds}
         content=" Enter the amount to replenish the balance"
         titleBtnAgree="Add Funds"
+        isVisible={isVisible}
+        hide={hide}
       >
         <TextField
           autoFocus

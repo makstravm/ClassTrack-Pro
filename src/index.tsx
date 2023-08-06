@@ -7,7 +7,6 @@ import "./firebase";
 import { CssBaseline } from "@mui/material";
 import { SumProvider } from "./context/sumContext";
 import { LessonsProvider } from "./context/lessonsContext";
-import { ModalProvider } from "./context/modalContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,13 +14,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <CssBaseline />
-    <ModalProvider>
-      <SumProvider>
-        <LessonsProvider>
-          <App />
-        </LessonsProvider>
-      </SumProvider>
-    </ModalProvider>
+    <SumProvider>
+      <LessonsProvider>
+        <App />
+      </LessonsProvider>
+    </SumProvider>
   </React.StrictMode>
 );
 
