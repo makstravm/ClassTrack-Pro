@@ -1,6 +1,6 @@
+import { useState } from "react";
 import { Box, Button, TextField } from "@mui/material";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
-import { useState } from "react";
 import { useLessonsContext } from "../context/lessonsContext";
 import { Modal } from "./Modal";
 import useModal from "../hooks/useModal";

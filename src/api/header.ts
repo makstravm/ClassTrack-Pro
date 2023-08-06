@@ -1,6 +1,6 @@
 import { ISum } from "./../types/index";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { initialSum } from "../context/sumContext";
 
 export const getSumDB = async () => {

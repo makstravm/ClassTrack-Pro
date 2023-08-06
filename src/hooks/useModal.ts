@@ -11,9 +11,6 @@ export type ModalHookProps = {
   isVisible: boolean;
 };
 
-/**
- * Simple helper for keeping track of a modal's state
- */
 export default function useModal(props: Props = {}): ModalHookProps {
   const { open, onShow } = props;
 

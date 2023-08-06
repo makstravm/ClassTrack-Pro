@@ -1,10 +1,10 @@
+import { useMemo } from "react";
 import { Box, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useLessonsContext } from "../context/lessonsContext";
 import { Modal } from "./Modal";
 import { getCurrentDate } from "../utils/getCurrentDate";
 import useModal from "../hooks/useModal";
-import { useMemo } from "react";
 
 export const AddLessonBtn = () => {
   const { addLesson, lessons } = useLessonsContext();
