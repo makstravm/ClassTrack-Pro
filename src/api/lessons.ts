@@ -1,6 +1,7 @@
 import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { ILessons, initialLessons } from "../context/lessonsContext";
+import { initialLessons } from "../context/lessonsContext";
+import { ILessons } from "../types";
 
 export const addLessonDB = async (lesson: ILessons) => {
   try {

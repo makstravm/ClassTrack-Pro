@@ -12,6 +12,7 @@ import {
   updatePriceDB,
 } from "../api/header";
 import { ISum } from "../types";
+import { getCurrentDate } from "../utils/getCurrentDate";
 
 interface IProps {
   children: ReactNode;
@@ -27,6 +28,7 @@ interface ISumContextProps {
 export const initialSum: ISum = {
   priceForLesson: 0,
   currentSum: 0,
+  lastAddFunds: "",
   totalSum: 0,
 };
 
@@ -64,6 +66,7 @@ export const SumProvider = ({ children }: IProps) => {
       ...sum,
       totalSum: sum.totalSum + amount,
       currentSum: sum.currentSum + amount,
+      lastAddFunds: getCurrentDate(),
     };
 
     await addFundsDB(newSum, () => setSum(newSum));
