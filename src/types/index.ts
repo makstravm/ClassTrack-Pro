@@ -1,3 +1,8 @@
+export enum RoutePath {
+  HOME = "/",
+  LOGIN = "/login",
+  REGISTER = "/register",
+}
 export interface ISum {
   currentSum: number;
   priceForLesson: number;
