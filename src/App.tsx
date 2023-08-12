@@ -1,19 +1,17 @@
-import { Container } from "@mui/material";
-import { Header } from "./components/Header";
-import { Main } from "./components/Main";
-import { AddLessonBtn } from "./components/AddLessonBtn";
-import { LessonsListWrapper } from "./components/LessonsListWrapper";
-import { AddFunds } from "./components/AddFunds";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { RoutePath } from "./types";
+import { LoginPage } from "./pages/LoginPage";
+import { HomePage } from "./pages/HomePage";
+import { RegistrationPage } from "./pages/RegistrationPage";
 
 const App = () => (
-  <Container>
-    <Header />
-    <Main>
-      <LessonsListWrapper />
-      <AddLessonBtn />
-    </Main>
-    <AddFunds />
-  </Container>
+  <BrowserRouter>
+    <Routes>
+      <Route path={RoutePath.HOME} element={<HomePage />} />
+      <Route path={RoutePath.LOGIN} element={<LoginPage />} />
+      <Route path={RoutePath.REGISTER} element={<RegistrationPage />} />
+    </Routes>
+  </BrowserRouter>
 );
 
 export default App;
