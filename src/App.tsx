@@ -13,7 +13,7 @@ import {
   loginValidationSchema,
   registerValidationSchema,
 } from "./constant/schema";
-import { signUpUser } from "./api/user";
+import { signInUser, signUpUser } from "./api/user";
 
 const App = () => (
   <BrowserRouter>
@@ -28,7 +28,7 @@ const App = () => (
               link={RoutePath.REGISTER}
               buttonText="Sign In"
               initialValues={loginInitialValue}
-              onSubmit={() => {}}
+              onSubmit={signInUser}
               formFields={loginFormFields}
               validationSchema={loginValidationSchema}
             />
