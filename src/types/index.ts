@@ -51,7 +51,6 @@ export type LoginValidationSchema = {
 
 export type RegisterValidationSchema = LoginValidationSchema & {
   name: Yup.StringSchema<string>;
-  lastName: Yup.StringSchema<string>;
   confirmPassword: Yup.StringSchema<string>;
 };
 

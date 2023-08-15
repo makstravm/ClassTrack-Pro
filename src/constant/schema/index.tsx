@@ -1,7 +1,6 @@
 import * as Yup from "yup";
 
 const nameValid = Yup.string().required("Field required");
-const lastNameValid = Yup.string().required("Field required");
 
 const confirmPasswordValid = Yup.string()
   .oneOf([Yup.ref("password")], "Password don't match")
@@ -22,7 +21,6 @@ const passwordValid = Yup.string()
 
 export const registerValidationSchema = {
   name: nameValid,
-  lastName: lastNameValid,
   email: emailValid,
   password: passwordValid,
   confirmPassword: confirmPasswordValid,

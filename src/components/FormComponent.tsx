@@ -4,6 +4,7 @@ import { Form, Formik, getIn, FormikProps } from "formik";
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Grid,
   TextField,
@@ -39,6 +40,7 @@ export const FormComponent = ({
   onSubmit,
   validationSchema,
 }: Props) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const [propsFormik, setPropsFormik] = useState<
@@ -60,6 +62,12 @@ export const FormComponent = ({
     });
   }, [validationSchema]);
 
+  const handleSubmit = async (values: InitialValuesFormType) => {
+    setIsLoading(true);
+    await onSubmit(values);
+    setIsLoading(false);
+  };
+
   return (
     <Container maxWidth="sm">
       <Box sx={{ py: 1, px: 2 }}>
@@ -70,13 +78,12 @@ export const FormComponent = ({
           <Formik
             initialValues={initialValues}
             validationSchema={Yup.object().shape(validationSchema)}
-            onSubmit={(values) => onSubmit(values, navigate)}
+            onSubmit={(values) => handleSubmit(values)}
           >
             {({
               errors,
               touched,
               handleChange,
-              isValidating,
               isValid,
               dirty,
             }: FormikProps<InitialValuesFormType>) => (
@@ -102,13 +109,16 @@ export const FormComponent = ({
                 </Grid>
                 <Box sx={{ mt: 3, mb: 2 }} textAlign="center">
                   <Button
-                    data-testid="qq"
                     variant="outlined"
                     color="secondary"
                     type="submit"
-                    disabled={!isValid && !dirty && !isValidating}
+                    disabled={isLoading || (!isValid && !dirty)}
                   >
-                    {buttonText}
+                    {!isLoading ? (
+                      buttonText
+                    ) : (
+                      <CircularProgress color="inherit" size="1.5rem" />
+                    )}
                   </Button>
                 </Box>
                 <Box textAlign="center">
