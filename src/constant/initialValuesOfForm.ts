@@ -27,12 +27,6 @@ export const registrationFormFields = [
   },
   {
     id: String(Math.random()),
-    name: "lastName",
-    type: "text",
-    label: "Last Name",
-  },
-  {
-    id: String(Math.random()),
     name: "email",
     type: "text",
     label: "Email",
@@ -53,7 +47,6 @@ export const registrationFormFields = [
 
 export const registrationInitialValue = {
   name: "",
-  lastName: "",
   email: "",
   password: "",
   confirmPassword: "",
