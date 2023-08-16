@@ -14,6 +14,7 @@ import {
 import { useSumContext } from "./sumContext";
 import { getCurrentDate } from "../utils/getCurrentDate";
 import { ILessons } from "../types";
+import { notifySuccess } from "../utils/toast";
 
 interface IProps {
   children: ReactNode;
@@ -55,6 +56,7 @@ export const LessonsProvider = ({ children }: IProps) => {
     await addLessonDB(lesson);
     updateCurrentSum(lesson.currentSum);
     setLessons([...lessons, lesson]);
+    notifySuccess(`Lesson successfully added for ${date}`);
   };
 
   const getLessons = async () => {
@@ -80,12 +82,14 @@ export const LessonsProvider = ({ children }: IProps) => {
     });
     addFunds(amount);
     setLessons(newLessons);
+    notifySuccess(`Successful added ${amount}`);
   };
 
   const delLesson = (lesson: ILessons) => {
     delLessonDB(lesson);
     updateCurrentSum(currentSum + lesson.price);
     setLessons(lessons.filter((l) => l.id !== lesson.id));
+    notifySuccess(`Successfully was deleted lesson`);
   };
   useEffect(() => {
     getLessons();

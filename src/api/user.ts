@@ -6,7 +6,8 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { LoginInitialValueType, RegistrationInitialValueType } from "../types";
-import { ContactEmergencySharp } from "@mui/icons-material";
+import { handleErrorMessage } from "../helpers/handleError";
+import { notifyError } from "../utils/toast";
 
 export const signUpUser = async ({
   email,
@@ -25,19 +26,14 @@ export const signUpUser = async ({
       displayName: name as string,
     });
   } catch (e) {
-    console.log({ error: e as FirebaseError });
+    if (e instanceof FirebaseError) {
+      return notifyError(handleErrorMessage(e.code));
+    }
+
+    return notifyError("Something wrong");
   }
 };
 
-export const handleError = (errMessage: string): string => {
-  const [, message] = errMessage.split("/");
-  return message
-    .split("-")
-    .map((word, i) =>
-      !i ? word[0].charAt(0).toUpperCase() + word.slice(1) : word
-    )
-    .join(" ");
-};
 export const signInUser = async ({
   email,
   password,
@@ -48,9 +44,9 @@ export const signInUser = async ({
     await signInWithEmailAndPassword(auth, email as string, password as string);
   } catch (e) {
     if (e instanceof FirebaseError) {
-      console.log(handleError(e.code));
+      return notifyError(handleErrorMessage(e.code));
     }
 
-    return "Something wrong";
+    return notifyError("Something wrong");
   }
 };

@@ -2,6 +2,7 @@ import { ISum } from "./../types/index";
 import { db } from "../firebase";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { initialSum } from "../context/sumContext";
+import { notifyError } from "../utils/toast";
 
 export const getSumDB = async () => {
   const res = await getDoc(doc(db, "sum", "tK7romW0nc7zx4jTkdXp"));
@@ -17,6 +18,7 @@ export const addFundsDB = async (newSum: ISum, cb: () => void) => {
     await setDoc(doc(db, "sum", "tK7romW0nc7zx4jTkdXp"), newSum);
     cb();
   } catch (e) {
+    notifyError("Something Wrong");
     return initialSum;
   }
 };
@@ -29,6 +31,7 @@ export const updatePriceDB = async (
     await updateDoc(doc(db, "sum", "tK7romW0nc7zx4jTkdXp"), newSum);
     cb();
   } catch (e) {
+    notifyError("Something Wrong");
     return initialSum;
   }
 };
@@ -41,6 +44,7 @@ export const updateCurrentSumDB = async (
     await updateDoc(doc(db, "sum", "tK7romW0nc7zx4jTkdXp"), newSum);
     cb();
   } catch (e) {
+    notifyError("Something Wrong");
     return initialSum;
   }
 };

@@ -71,6 +71,7 @@ export const SumProvider = ({ children }: IProps) => {
 
     await addFundsDB(newSum, () => setSum(newSum));
   };
+
   useEffect(() => {
     getSum();
   }, []);
