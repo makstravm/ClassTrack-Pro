@@ -1,3 +1,4 @@
+import { FormikErrors, FormikTouched } from "formik";
 import * as Yup from "yup";
 
 export enum RoutePath {
@@ -27,15 +28,16 @@ export type FormFieldType = {
   type: string;
   label: string;
 };
-
-export type LoginInitialValueType = {
+type EmailAndPassword = {
   email: string;
   password: string;
 };
+export type LoginInitialValueType = EmailAndPassword & {
+  rememberMe: boolean;
+};
 
-export type RegistrationInitialValueType = LoginInitialValueType & {
+export type RegistrationInitialValueType = EmailAndPassword & {
   name: string;
-  lastName: string;
   confirmPassword: string;
 };
 
@@ -58,3 +60,7 @@ export type RegisterValidationSchema = LoginValidationSchema & {
 export type InitialSchemaFormType =
   | LoginValidationSchema
   | RegisterValidationSchema;
+
+export type PasswordFieldErrorType = FormikErrors<InitialValuesFormType>;
+
+export type PasswordFieldTouchedType = FormikTouched<InitialValuesFormType>;

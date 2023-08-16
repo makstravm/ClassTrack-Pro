@@ -4,8 +4,10 @@ import { Form, Formik, getIn, FormikProps } from "formik";
 import {
   Box,
   Button,
+  Checkbox,
   CircularProgress,
   Container,
+  FormControlLabel,
   Grid,
   TextField,
   Typography,
@@ -19,6 +21,8 @@ import {
   InitialValuesFormType,
   RoutePath,
 } from "../types";
+import PasswordField from "./PasswordField";
+import { FieldsTypes } from "../constant/fieldsTypes";
 
 export type Props = {
   initialValues: InitialValuesFormType;
@@ -26,6 +30,7 @@ export type Props = {
   title: string;
   titleLink: string;
   link: string;
+  isRememberMe: boolean;
   buttonText: string;
   onSubmit: Function; //(vSalues: FormicValuesType, navigate: NavigateFunction) => void;
   validationSchema: InitialSchemaFormType;
@@ -39,6 +44,7 @@ export const FormComponent = ({
   link,
   buttonText,
   onSubmit,
+  isRememberMe,
   validationSchema,
 }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -65,9 +71,11 @@ export const FormComponent = ({
 
   const handleSubmit = async (values: InitialValuesFormType) => {
     setIsLoading(true);
-    await onSubmit(values);
+    const isSuccess = await onSubmit(values);
     setIsLoading(false);
-    navigate(RoutePath.SUCCESS_SIGN_IN, { replace: true });
+    if (isSuccess) {
+      navigate(RoutePath.SUCCESS_SIGN_IN, { replace: true });
+    }
   };
 
   return (
@@ -92,22 +100,55 @@ export const FormComponent = ({
               <Form>
                 <Grid container justifyContent="center" spacing={2}>
                   {formFields.map(({ id, name, type, label }) => (
-                    <Grid key={id} item xs={10}>
-                      <TextField
-                        name={name}
-                        label={label}
-                        type={type}
-                        size="small"
-                        color="secondary"
-                        autoComplete="given-name"
-                        fullWidth
-                        error={!!(getIn(touched, name) && getIn(errors, name))}
-                        helperText={getIn(touched, name) && getIn(errors, name)}
-                        onChange={handleChange}
-                        inputProps={{ "data-testid": `input-${name}` }}
-                      />
+                    <Grid key={id} item xs={11}>
+                      {type === FieldsTypes.TEXT ? (
+                        <TextField
+                          name={name}
+                          label={label}
+                          type={type}
+                          size="small"
+                          color="secondary"
+                          fullWidth
+                          error={
+                            !!(getIn(touched, name) && getIn(errors, name))
+                          }
+                          helperText={
+                            !!(getIn(touched, name) && getIn(errors, name)) &&
+                            getIn(errors, name)
+                          }
+                          onChange={handleChange}
+                        />
+                      ) : (
+                        <PasswordField
+                          name={name}
+                          label={label}
+                          type={type}
+                          errors={errors}
+                          touched={touched}
+                          handleChange={handleChange}
+                        />
+                      )}
                     </Grid>
                   ))}
+                  {isRememberMe && (
+                    <Grid item xs={10}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            color="secondary"
+                            name="rememberMe"
+                            onChange={handleChange}
+                          />
+                        }
+                        label={"Remember Me"}
+                        componentsProps={{
+                          typography: {
+                            fontSize: ".9rem",
+                          },
+                        }}
+                      />
+                    </Grid>
+                  )}
                 </Grid>
                 <Box sx={{ mt: 3, mb: 2 }} textAlign="center">
                   <Button
