@@ -11,10 +11,18 @@ export const Main = ({ children }: Props) => {
   } = useSumContext();
   return (
     <>
-      <Typography variant="h5" pt={3} textAlign={"center"}>
+      <Typography
+        variant="h4"
+        pt={3}
+        fontWeight={700}
+        fontStyle={"italic"}
+        textAlign={"center"}
+        color={"#45194c"}
+        style={{ textShadow: "2px -2px 4px #9942a8" }}
+      >
         Simple Lessons Counter
       </Typography>
-      <Typography variant="body1" py={2} textAlign={"center"} color="#11219c">
+      <Typography variant="body1" py={2} textAlign={"center"} color="#54215c">
         Last the add funds
         <Typography
           component={"span"}
@@ -23,7 +31,7 @@ export const Main = ({ children }: Props) => {
           pl={1}
           fontWeight={"bold"}
           textAlign={"center"}
-          color="#00a6d2"
+          color="secondary"
         >
           {lastAddFunds}
         </Typography>

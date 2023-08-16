@@ -23,6 +23,7 @@ export const AddFunds = () => {
       <Button
         variant="contained"
         onClick={show}
+        color="secondary"
         startIcon={<MonetizationOnIcon />}
         sx={{ borderRadius: "50%", width: 100, height: 100 }}
       >
@@ -39,6 +40,7 @@ export const AddFunds = () => {
         <TextField
           autoFocus
           margin="dense"
+          color="secondary"
           id="name"
           value={value}
           onChange={onChangeValue}

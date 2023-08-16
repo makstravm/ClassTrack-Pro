@@ -22,6 +22,7 @@ export const AddLessonBtn = () => {
   return (
     <Box textAlign={"center"} py={2}>
       <Button
+        color="secondary"
         onClick={show}
         startIcon={<AddIcon fontSize="small" />}
         variant="outlined"

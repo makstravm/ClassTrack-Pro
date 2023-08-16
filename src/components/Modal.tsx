@@ -34,8 +34,12 @@ export const Modal = ({
         {children}
       </DialogContent>
       <DialogActions>
-        <Button onClick={hide}>Cancel</Button>
-        <Button onClick={onClick}>{titleBtnAgree}</Button>
+        <Button color="secondary" onClick={hide}>
+          Cancel
+        </Button>
+        <Button color="secondary" onClick={onClick}>
+          {titleBtnAgree}
+        </Button>
       </DialogActions>
     </Dialog>
   );
