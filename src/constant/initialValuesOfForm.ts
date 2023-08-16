@@ -16,6 +16,7 @@ export const loginFormFields = [
 export const loginInitialValue = {
   email: "",
   password: "",
+  rememberMe: false,
 };
 
 export const registrationFormFields = [

@@ -30,6 +30,7 @@ const App = () => (
               buttonText="Sign In"
               initialValues={loginInitialValue}
               onSubmit={signInUser}
+              isRememberMe={true}
               formFields={loginFormFields}
               validationSchema={loginValidationSchema}
             />
@@ -46,6 +47,7 @@ const App = () => (
               initialValues={registrationInitialValue}
               formFields={registrationFormFields}
               onSubmit={signUpUser}
+              isRememberMe={false}
               validationSchema={registerValidationSchema}
             />
           }

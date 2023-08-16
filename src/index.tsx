@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import "./firebase";
 import { ToastContainer } from "react-toastify";
+import { UserProvider } from "./context/userContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -17,11 +18,13 @@ root.render(
   <React.StrictMode>
     <CssBaseline />
     <ToastContainer theme="light" />
-    <SumProvider>
-      <LessonsProvider>
-        <App />
-      </LessonsProvider>
-    </SumProvider>
+    <UserProvider>
+      <SumProvider>
+        <LessonsProvider>
+          <App />
+        </LessonsProvider>
+      </SumProvider>
+    </UserProvider>
   </React.StrictMode>
 );
 

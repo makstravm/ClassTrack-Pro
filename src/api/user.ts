@@ -1,7 +1,10 @@
 import { FirebaseError } from "firebase/app";
 import {
+  browserLocalPersistence,
+  browserSessionPersistence,
   createUserWithEmailAndPassword,
   getAuth,
+  setPersistence,
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
@@ -25,28 +28,41 @@ export const signUpUser = async ({
     await updateProfile(response.user, {
       displayName: name as string,
     });
+
+    await setPersistence(auth, browserSessionPersistence);
+    return true;
   } catch (e) {
     if (e instanceof FirebaseError) {
-      return notifyError(handleErrorMessage(e.code));
+      notifyError(handleErrorMessage(e.code));
+      return false;
     }
 
-    return notifyError("Something wrong");
+    notifyError("Something wrong");
+    return false;
   }
 };
 
 export const signInUser = async ({
   email,
   password,
+  rememberMe,
 }: LoginInitialValueType) => {
   const auth = getAuth();
 
   try {
     await signInWithEmailAndPassword(auth, email as string, password as string);
+    await setPersistence(
+      auth,
+      rememberMe ? browserLocalPersistence : browserSessionPersistence
+    );
+    return true;
   } catch (e) {
     if (e instanceof FirebaseError) {
-      return notifyError(handleErrorMessage(e.code));
+      notifyError(handleErrorMessage(e.code));
+      return false;
     }
 
-    return notifyError("Something wrong");
+    notifyError("Something wrong");
+    return false;
   }
 };
