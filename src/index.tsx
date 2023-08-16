@@ -5,8 +5,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { SumProvider } from "./context/sumContext";
 import { LessonsProvider } from "./context/lessonsContext";
+import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import "./firebase";
+import { ToastContainer } from "react-toastify";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -14,6 +16,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <CssBaseline />
+    <ToastContainer theme="light" />
     <SumProvider>
       <LessonsProvider>
         <App />
