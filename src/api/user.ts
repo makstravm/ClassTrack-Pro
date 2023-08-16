@@ -6,6 +6,7 @@ import {
   getAuth,
   setPersistence,
   signInWithEmailAndPassword,
+  signOut,
   updateProfile,
 } from "firebase/auth";
 import { LoginInitialValueType, RegistrationInitialValueType } from "../types";
@@ -64,5 +65,17 @@ export const signInUser = async ({
 
     notifyError("Something wrong");
     return false;
+  }
+};
+
+export const signOutUser = async () => {
+  const auth = getAuth();
+  try {
+    await signOut(auth);
+  } catch (e) {
+    if (e instanceof FirebaseError) {
+      return notifyError(handleErrorMessage(e.code));
+    }
+    return notifyError("Something wrong");
   }
 };

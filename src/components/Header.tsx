@@ -4,6 +4,8 @@ import { useSumContext } from "../context/sumContext";
 import { sortObjectKeys } from "../utils/sortObjectKeys";
 import { EditPrice } from "./HeaderPrice";
 
+import { UserPanel } from "./UserPanel";
+
 const textHeader: Record<string, string> = {
   totalSum: "Total spent sum",
   priceForLesson: "Price for lesson",
@@ -61,9 +63,14 @@ const HeaderItem = () => {
 export const Header = () => {
   return (
     <Paper elevation={8}>
-      <Grid container p={2} justifyContent={"space-between"}>
+      <Grid
+        container
+        p={2}
+        alignItems={"center"}
+        justifyContent={"space-between"}
+      >
         <HeaderItem />
-        <Grid item>May be Log in/out</Grid>
+        <UserPanel />
       </Grid>
     </Paper>
   );
