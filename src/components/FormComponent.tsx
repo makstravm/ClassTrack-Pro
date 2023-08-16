@@ -17,6 +17,7 @@ import {
   FormFieldType,
   InitialSchemaFormType,
   InitialValuesFormType,
+  RoutePath,
 } from "../types";
 
 export type Props = {
@@ -60,12 +61,13 @@ export const FormComponent = ({
       initialValues,
       validationSchema,
     });
-  }, [validationSchema]);
+  }, [validationSchema, initialValues]);
 
   const handleSubmit = async (values: InitialValuesFormType) => {
     setIsLoading(true);
     await onSubmit(values);
     setIsLoading(false);
+    navigate(RoutePath.SUCCESS_SIGN_IN, { replace: true });
   };
 
   return (

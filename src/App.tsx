@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { RoutePath } from "./types";
 import { HomePage } from "./pages/HomePage";
 import { AuthLayout } from "./pages/AuthLayout";
@@ -14,6 +14,7 @@ import {
   registerValidationSchema,
 } from "./constant/schema";
 import { signInUser, signUpUser } from "./api/user";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const App = () => (
   <BrowserRouter>
@@ -50,8 +51,14 @@ const App = () => (
           }
         />
       </Route>
-
-      <Route path={RoutePath.HOME} element={<HomePage />} />
+      <Route path={RoutePath.HOME} element={<ProtectedRoute />}>
+        <Route
+          path={RoutePath.SUCCESS_SIGN_IN}
+          element={<Navigate to={RoutePath.HOME} />}
+        />
+        <Route path={RoutePath.HOME} element={<HomePage />} />
+        <Route path="*" element={<Navigate to={RoutePath.HOME} />} />
+      </Route>
     </Routes>
   </BrowserRouter>
 );
