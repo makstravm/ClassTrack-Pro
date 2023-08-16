@@ -16,7 +16,7 @@ const HeaderItem = () => {
   const sortSum = useMemo(() => sortObjectKeys(sum as any), [sum]);
   const isPriceField = (par: string) => par === "priceForLesson";
   const getColor = (par: string) =>
-    par === "totalSum" ? "#04d003de" : "#003eff";
+    par === "totalSum" ? "#04d003de" : "secondary";
 
   return (
     <>
@@ -45,7 +45,7 @@ const HeaderItem = () => {
                   component="span"
                   textAlign={"center"}
                   variant="h5"
-                  color={"#003eff"}
+                  color={"#54215c"}
                   pl={1}
                 >
                   UAH
