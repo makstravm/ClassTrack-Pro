@@ -13,6 +13,7 @@ import {
 } from "../api/header";
 import { ISum } from "../types";
 import { getCurrentDate } from "../utils/getCurrentDate";
+import { useUserContext } from "./userContext";
 
 interface IProps {
   children: ReactNode;
@@ -42,11 +43,14 @@ const initialState = {
 const SumContext = createContext<ISumContextProps>(initialState);
 
 export const SumProvider = ({ children }: IProps) => {
+  const { user } = useUserContext();
   const [sum, setSum] = useState<ISum>(initialSum);
 
   const getSum = async () => {
-    const res = await getSumDB();
-    setSum(res);
+    if (user) {
+      const res = await getSumDB(user.uid);
+      setSum(res);
+    }
   };
 
   const updatePrice = async (val: number) => {

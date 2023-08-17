@@ -9,6 +9,7 @@ import { db } from "../firebase";
 import { initialLessons } from "../context/lessonsContext";
 import { ILessons } from "../types";
 import { notifyError } from "../utils/toast";
+import { sumDefault } from "../constant/sumDefault";
 
 export const addLessonDB = async (lesson: ILessons) => {
   try {
@@ -44,6 +45,16 @@ export const getLessonsDB = async () => {
 export const updateIsPaidForLessonDB = async ({ id, ...rest }: ILessons) => {
   try {
     await setDoc(doc(db, "lessons", id), { ...rest });
+  } catch (e) {
+    notifyError("Something Wrong");
+    return initialLessons;
+  }
+};
+
+export const addNewUserCollectionDB = async (id: string) => {
+  try {
+    await setDoc(doc(db, "lessons", id), {});
+    await setDoc(doc(db, "sum", id), sumDefault);
   } catch (e) {
     notifyError("Something Wrong");
     return initialLessons;

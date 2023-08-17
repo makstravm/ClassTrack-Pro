@@ -4,8 +4,8 @@ import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { initialSum } from "../context/sumContext";
 import { notifyError } from "../utils/toast";
 
-export const getSumDB = async () => {
-  const res = await getDoc(doc(db, "sum", "tK7romW0nc7zx4jTkdXp"));
+export const getSumDB = async (id: string) => {
+  const res = await getDoc(doc(db, "sum", id));
   if (res.exists()) {
     return res.data() as ISum;
   } else {
