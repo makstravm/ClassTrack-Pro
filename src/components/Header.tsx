@@ -3,7 +3,6 @@ import { Grid, Paper, Typography } from "@mui/material";
 import { useSumContext } from "../context/sumContext";
 import { sortObjectKeys } from "../utils/sortObjectKeys";
 import { EditPrice } from "./HeaderPrice";
-
 import { UserPanel } from "./UserPanel";
 
 const textHeader: Record<string, string> = {
@@ -55,6 +54,7 @@ const HeaderItem = () => {
               </Grid>
             );
           }
+          return null;
         })}
     </>
   );
