@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { RoutePath } from "../types";
 import { useUserContext } from "../context/userContext";
+import { RoutePath } from "../constant/enums";
 
 export const ProtectedRoute = () => {
   const { user, isLoading } = useUserContext();

@@ -1,8 +1,8 @@
 import { Avatar, Box, Container } from "@mui/material";
 import { Navigate, Outlet } from "react-router-dom";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { RoutePath } from "../types";
 import { useUserContext } from "../context/userContext";
+import { RoutePath } from "../constant/enums";
 
 export const AuthLayout = () => {
   const { user } = useUserContext();

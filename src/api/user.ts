@@ -12,6 +12,7 @@ import {
 import { LoginInitialValueType, RegistrationInitialValueType } from "../types";
 import { handleErrorMessage } from "../helpers/handleError";
 import { notifyError } from "../utils/toast";
+import { addNewUserCollectionDB } from "./lessons";
 
 export const signUpUser = async ({
   email,
@@ -29,7 +30,7 @@ export const signUpUser = async ({
     await updateProfile(response.user, {
       displayName: name as string,
     });
-
+    await addNewUserCollectionDB(response.user.uid);
     await setPersistence(auth, browserSessionPersistence);
     return true;
   } catch (e) {

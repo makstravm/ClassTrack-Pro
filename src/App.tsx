@@ -1,5 +1,4 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { RoutePath } from "./types";
 import { HomePage } from "./pages/HomePage";
 import { AuthLayout } from "./pages/AuthLayout";
 import { FormComponent } from "./components/FormComponent";
@@ -13,6 +12,7 @@ import {
   loginValidationSchema,
   registerValidationSchema,
 } from "./constant/schema";
+import { RoutePath } from "./constant/enums";
 import { signInUser, signUpUser } from "./api/user";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 

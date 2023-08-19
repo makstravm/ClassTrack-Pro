@@ -13,6 +13,7 @@ import {
 } from "../api/header";
 import { ISum } from "../types";
 import { getCurrentDate } from "../utils/getCurrentDate";
+import { useUserContext } from "./userContext";
 
 interface IProps {
   children: ReactNode;
@@ -42,23 +43,28 @@ const initialState = {
 const SumContext = createContext<ISumContextProps>(initialState);
 
 export const SumProvider = ({ children }: IProps) => {
+  const { user } = useUserContext();
   const [sum, setSum] = useState<ISum>(initialSum);
 
-  const getSum = async () => {
-    const res = await getSumDB();
+  const getSum = async (id: string) => {
+    const res = await getSumDB(id);
     setSum(res);
   };
 
   const updatePrice = async (val: number) => {
-    await updatePriceDB({ priceForLesson: val }, () =>
-      setSum({ ...sum, priceForLesson: val })
-    );
+    if (user) {
+      await updatePriceDB({ priceForLesson: val }, user.uid, () =>
+        setSum({ ...sum, priceForLesson: val })
+      );
+    }
   };
 
   const updateCurrentSum = async (currentSum: number) => {
-    await updateCurrentSumDB({ currentSum }, () =>
-      setSum({ ...sum, currentSum })
-    );
+    if (user) {
+      await updateCurrentSumDB({ currentSum }, user.uid, () =>
+        setSum({ ...sum, currentSum })
+      );
+    }
   };
 
   const addFunds = async (amount: number) => {
@@ -69,12 +75,16 @@ export const SumProvider = ({ children }: IProps) => {
       lastAddFunds: getCurrentDate(),
     };
 
-    await addFundsDB(newSum, () => setSum(newSum));
+    if (user) {
+      await addFundsDB(newSum, user.uid, () => setSum(newSum));
+    }
   };
 
   useEffect(() => {
-    getSum();
-  }, []);
+    if (user) {
+      getSum(user.uid);
+    }
+  }, [user]);
 
   return (
     <SumContext.Provider
