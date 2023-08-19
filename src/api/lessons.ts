@@ -86,7 +86,7 @@ export const addNewUserCollectionDB = async (id: string) => {
       currentSum: 0,
       priceForLesson: 0,
       totalSum: 0,
-      lastAddFunds: 0,
+      lastAddFunds: "",
     });
 
     await setDoc(doc(db, "lessonsStore", id), { lessonsAmount: 0 });
