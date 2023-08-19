@@ -8,13 +8,16 @@ import {
 import {
   addLessonDB,
   delLessonDB,
+  getLessonsAmountDB,
   getLessonsDB,
   updateIsPaidForLessonDB,
+  updateLessonsAmount,
 } from "../api/lessons";
 import { useSumContext } from "./sumContext";
 import { getCurrentDate } from "../utils/getCurrentDate";
 import { ILessons } from "../types";
 import { notifySuccess } from "../utils/toast";
+import { useUserContext } from "./userContext";
 
 interface IProps {
   children: ReactNode;
@@ -26,6 +29,7 @@ interface ILessonsContext {
   delLesson: (lesson: ILessons) => void;
   updateIsPaidForLesson: (par: number) => void;
 }
+
 export const initialLessons = {
   lessons: [],
   addLesson: () => {},
@@ -37,11 +41,14 @@ const LessonsContext = createContext<ILessonsContext>(initialLessons);
 
 export const LessonsProvider = ({ children }: IProps) => {
   const [lessons, setLessons] = useState<ILessons[]>([]);
+  const [lessonsAmount, setLessonsAmount] = useState<number>(0);
+
   const {
     sum: { priceForLesson, currentSum },
     updateCurrentSum,
     addFunds,
   } = useSumContext();
+  const { user } = useUserContext();
 
   const addLesson = async () => {
     const date = getCurrentDate();
@@ -50,18 +57,26 @@ export const LessonsProvider = ({ children }: IProps) => {
       id: `id-${date}`,
       date,
       currentSum: sum,
-      isPaid: sum >= 0 ? true : false,
+      isPaid: sum > 0 ? true : false,
       price: priceForLesson,
     };
-    await addLessonDB(lesson);
-    updateCurrentSum(lesson.currentSum);
-    setLessons([...lessons, lesson]);
-    notifySuccess(`Lesson successfully added for ${date}`);
+    if (user) {
+      const newLessonsAmount = { lessonsAmount: lessonsAmount + 1 };
+      await addLessonDB(lesson, user.uid);
+      updateLessonsAmount(newLessonsAmount, user.uid);
+      updateCurrentSum(lesson.currentSum);
+      setLessons([...lessons, lesson]);
+      notifySuccess(`Lesson successfully added for ${date}`);
+    }
   };
 
-  const getLessons = async () => {
-    const res = await getLessonsDB();
-    setLessons(res);
+  const getLessons = async (id: string) => {
+    const { lessonsAmount } = await getLessonsAmountDB(id);
+    if (lessonsAmount) {
+      const res = await getLessonsDB(id);
+      setLessons(res);
+    }
+    setLessonsAmount(lessonsAmount);
   };
 
   const updateIsPaidForLesson = async (amount: number) => {
@@ -92,12 +107,19 @@ export const LessonsProvider = ({ children }: IProps) => {
     notifySuccess(`Successfully was deleted lesson`);
   };
   useEffect(() => {
-    getLessons();
-  }, []);
+    if (user) {
+      getLessons(user.uid);
+    }
+  }, [user]);
 
   return (
     <LessonsContext.Provider
-      value={{ lessons, addLesson, updateIsPaidForLesson, delLesson }}
+      value={{
+        lessons,
+        addLesson,
+        updateIsPaidForLesson,
+        delLesson,
+      }}
     >
       {children}
     </LessonsContext.Provider>
