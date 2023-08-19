@@ -61,11 +61,12 @@ export const LessonsProvider = ({ children }: IProps) => {
       price: priceForLesson,
     };
     if (user) {
-      const newLessonsAmount = { lessonsAmount: lessonsAmount + 1 };
+      const newLessonsAmount = lessonsAmount + 1;
       await addLessonDB(lesson, user.uid);
-      updateLessonsAmount(newLessonsAmount, user.uid);
+      await updateLessonsAmount({ lessonsAmount: newLessonsAmount }, user.uid);
       updateCurrentSum(lesson.currentSum);
       setLessons([...lessons, lesson]);
+      setLessonsAmount(newLessonsAmount);
       notifySuccess(`Lesson successfully added for ${date}`);
     }
   };
@@ -102,11 +103,12 @@ export const LessonsProvider = ({ children }: IProps) => {
 
   const delLesson = async (lesson: ILessons) => {
     if (user) {
-      const newLessonsAmount = { lessonsAmount: lessonsAmount - 1 };
+      const newLessonsAmount = lessonsAmount - 1;
       await delLessonDB(lesson, user.uid);
-      updateLessonsAmount(newLessonsAmount, user.uid);
+      await updateLessonsAmount({ lessonsAmount: newLessonsAmount }, user.uid);
       updateCurrentSum(currentSum + lesson.price);
       setLessons(lessons.filter((l) => l.id !== lesson.id));
+      setLessonsAmount(newLessonsAmount);
       notifySuccess(`Successfully was deleted lesson`);
     }
   };

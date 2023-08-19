@@ -27,8 +27,8 @@ export const updateLessonsAmount = async (
   lessonsAmount: ILessonsAmount,
   userId: string
 ) => {
+  console.log("first)", lessonsAmount);
   try {
-    console.log(lessonsAmount);
     await setDoc(doc(db, `lessonsStore`, userId), lessonsAmount);
   } catch (e) {
     notifyError("Something Wrong");
