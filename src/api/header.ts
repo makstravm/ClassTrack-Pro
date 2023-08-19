@@ -13,9 +13,13 @@ export const getSumDB = async (id: string) => {
   }
 };
 
-export const addFundsDB = async (newSum: ISum, cb: () => void) => {
+export const addFundsDB = async (
+  newSum: ISum,
+  userId: string,
+  cb: () => void
+) => {
   try {
-    await setDoc(doc(db, "sum", "tK7romW0nc7zx4jTkdXp"), newSum);
+    await setDoc(doc(db, "sum", userId), newSum);
     cb();
   } catch (e) {
     notifyError("Something Wrong");
@@ -44,7 +48,6 @@ export const updateCurrentSumDB = async (
   cb: () => void
 ) => {
   try {
-    console.log(newSum);
     await updateDoc(doc(db, "sum", userId), newSum);
     cb();
   } catch (e) {
