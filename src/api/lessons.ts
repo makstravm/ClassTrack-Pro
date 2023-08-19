@@ -36,9 +36,9 @@ export const updateLessonsAmount = async (
   }
 };
 
-export const delLessonDB = async (lesson: ILessons) => {
+export const delLessonDB = async (lesson: ILessons, userId: string) => {
   try {
-    await deleteDoc(doc(db, "lessons", lesson.id));
+    await deleteDoc(doc(db, `lessonsStore/${userId}/lessonsList`, lesson.id));
   } catch (e) {
     notifyError("Something Wrong");
     return initialLessons;

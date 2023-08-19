@@ -100,11 +100,15 @@ export const LessonsProvider = ({ children }: IProps) => {
     notifySuccess(`Successful added ${amount}`);
   };
 
-  const delLesson = (lesson: ILessons) => {
-    delLessonDB(lesson);
-    updateCurrentSum(currentSum + lesson.price);
-    setLessons(lessons.filter((l) => l.id !== lesson.id));
-    notifySuccess(`Successfully was deleted lesson`);
+  const delLesson = async (lesson: ILessons) => {
+    if (user) {
+      const newLessonsAmount = { lessonsAmount: lessonsAmount - 1 };
+      await delLessonDB(lesson, user.uid);
+      updateLessonsAmount(newLessonsAmount, user.uid);
+      updateCurrentSum(currentSum + lesson.price);
+      setLessons(lessons.filter((l) => l.id !== lesson.id));
+      notifySuccess(`Successfully was deleted lesson`);
+    }
   };
   useEffect(() => {
     if (user) {
