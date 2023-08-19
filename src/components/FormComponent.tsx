@@ -23,6 +23,7 @@ import {
 } from "../types";
 import PasswordField from "./PasswordField";
 import { FieldsTypes } from "../constant/fieldsTypes";
+import { addNewUserCollectionDB } from "../api/lessons";
 
 export type Props = {
   initialValues: InitialValuesFormType;
@@ -77,9 +78,10 @@ export const FormComponent = ({
       navigate(RoutePath.SUCCESS_SIGN_IN, { replace: true });
     }
   };
-
+  const a = async () => await addNewUserCollectionDB("id");
   return (
     <Container maxWidth="sm">
+      <Button onClick={a}>+++++++++++</Button>
       <Box sx={{ py: 1, px: 2 }}>
         <Typography variant="h4" align="center" sx={{ pb: 2 }}>
           {title}

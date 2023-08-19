@@ -49,7 +49,8 @@ export const SumProvider = ({ children }: IProps) => {
   const getSum = async () => {
     if (user) {
       const res = await getSumDB(user.uid);
-      setSum(res);
+      console.log(res);
+      // setSum(res);
     }
   };
 

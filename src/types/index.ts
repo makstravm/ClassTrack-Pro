@@ -13,6 +13,9 @@ export interface ISum {
   totalSum: number;
   lastAddFunds: string;
 }
+export interface ILessonsAmount {
+  lessonsAmount: number;
+}
 
 export interface ILessons {
   id: string;

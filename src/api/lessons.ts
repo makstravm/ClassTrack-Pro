@@ -2,14 +2,14 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   setDoc,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { initialLessons } from "../context/lessonsContext";
-import { ILessons } from "../types";
+import { ILessons, ILessonsAmount } from "../types";
 import { notifyError } from "../utils/toast";
-import { sumDefault } from "../constant/sumDefault";
 
 export const addLessonDB = async (lesson: ILessons) => {
   try {
@@ -28,18 +28,25 @@ export const delLessonDB = async (lesson: ILessons) => {
     return initialLessons;
   }
 };
-export const getLessonsDB = async () => {
+
+export const getLessonsDB = async (id: string) => {
   try {
-    const res = await getDocs(collection(db, "lessons"));
+    const res = await getDocs(collection(db, `lessonsStore/${id}/lessonsList`));
     let lessons: any = [];
     res.forEach((doc) => {
       lessons.push({ id: doc.id, ...doc.data() });
     });
+    console.log(lessons);
     return lessons;
-  } catch (e) {
-    notifyError("Something Wrong");
-    return initialLessons;
+  } catch (error) {}
+};
+
+export const getLessonsAmountDB = async (id: string) => {
+  const res = await getDoc(doc(db, "lessonsStore", id));
+  if (res.exists()) {
+    return res.data() as ILessonsAmount;
   }
+  return { lessonsAmount: 0 };
 };
 
 export const updateIsPaidForLessonDB = async ({ id, ...rest }: ILessons) => {
@@ -53,8 +60,14 @@ export const updateIsPaidForLessonDB = async ({ id, ...rest }: ILessons) => {
 
 export const addNewUserCollectionDB = async (id: string) => {
   try {
-    await setDoc(doc(db, "lessons", id), {});
-    await setDoc(doc(db, "sum", id), sumDefault);
+    await setDoc(doc(db, "sum", id), {
+      currentSum: 0,
+      priceForLesson: 0,
+      totalSum: 0,
+      lastAddFunds: 0,
+    });
+
+    await setDoc(doc(db, "lessonsStore", id), { lessonsAmount: 0 });
   } catch (e) {
     notifyError("Something Wrong");
     return initialLessons;
