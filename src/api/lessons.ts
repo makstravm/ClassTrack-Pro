@@ -65,9 +65,15 @@ export const getLessonsAmountDB = async (id: string) => {
   return { lessonsAmount: 0 };
 };
 
-export const updateIsPaidForLessonDB = async ({ id, ...rest }: ILessons) => {
+export const updateIsPaidForLessonDB = async (
+  { id, ...rest }: ILessons,
+  userId: string
+) => {
   try {
-    await setDoc(doc(db, "lessons", id), { ...rest });
+    await setDoc(doc(db, `lessonsStore/${userId}/lessonsList`, id), {
+      id,
+      ...rest,
+    });
   } catch (e) {
     notifyError("Something Wrong");
     return initialLessons;

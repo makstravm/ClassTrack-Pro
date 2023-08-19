@@ -89,7 +89,7 @@ export const LessonsProvider = ({ children }: IProps) => {
           newL = { ...l, currentSum: l.currentSum + amount };
         }
 
-        updateIsPaidForLessonDB(newL);
+        user && updateIsPaidForLessonDB(newL, user?.uid);
         return newL;
       } else {
         return l;
