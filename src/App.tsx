@@ -17,7 +17,7 @@ import { signInUser, signUpUser } from "./api/user";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const App = () => (
-  <BrowserRouter>
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <Routes>
       <Route element={<AuthLayout />}>
         <Route
