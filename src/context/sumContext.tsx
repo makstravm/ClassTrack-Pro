@@ -10,7 +10,7 @@ import {
   getSumDB,
   updateCurrentSumDB,
   updatePriceDB,
-} from "../api/header";
+} from "../api/sum";
 import { ISum } from "../types";
 import { getCurrentDate } from "../utils/getCurrentDate";
 import { useUserContext } from "./userContext";

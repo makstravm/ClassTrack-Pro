@@ -27,7 +27,6 @@ export const updateLessonsAmount = async (
   lessonsAmount: ILessonsAmount,
   userId: string
 ) => {
-  console.log("first)", lessonsAmount);
   try {
     await setDoc(doc(db, `lessonsStore`, userId), lessonsAmount);
   } catch (e) {
@@ -52,7 +51,6 @@ export const getLessonsDB = async (id: string) => {
     res.forEach((doc) => {
       lessons.push({ id: doc.id, ...doc.data() });
     });
-    console.log(lessons);
     return lessons;
   } catch (error) {}
 };
