@@ -1,4 +1,4 @@
-import { ISum } from "./../types/index";
+import { ISum } from "../types/index";
 import { db } from "../firebase";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { initialSum } from "../context/sumContext";

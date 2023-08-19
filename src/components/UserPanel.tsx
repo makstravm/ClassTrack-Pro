@@ -28,8 +28,10 @@ export const UserPanel = () => {
         onClick={handleClick}
         sx={{ textTransform: "inherit" }}
       >
-        <Typography component={"span"}>Hi,</Typography>
-        <Typography component={"span"} pl={1}>
+        <Typography component={"span"} variant="h6">
+          Hi,
+        </Typography>
+        <Typography component={"span"} variant="h6" fontWeight={"bold"} pl={1}>
           {user?.displayName || user?.email}
         </Typography>
         <ArrowDropDownIcon />
