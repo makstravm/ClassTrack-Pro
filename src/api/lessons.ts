@@ -11,9 +11,25 @@ import { initialLessons } from "../context/lessonsContext";
 import { ILessons, ILessonsAmount } from "../types";
 import { notifyError } from "../utils/toast";
 
-export const addLessonDB = async (lesson: ILessons) => {
+export const addLessonDB = async (lesson: ILessons, userId: string) => {
   try {
-    await setDoc(doc(db, "lessons", lesson.id), lesson);
+    await setDoc(
+      doc(db, `lessonsStore/${userId}/lessonsList`, lesson.id),
+      lesson
+    );
+  } catch (e) {
+    notifyError("Something Wrong");
+    return initialLessons;
+  }
+};
+
+export const updateLessonsAmount = async (
+  lessonsAmount: ILessonsAmount,
+  userId: string
+) => {
+  try {
+    console.log(lessonsAmount);
+    await setDoc(doc(db, `lessonsStore`, userId), lessonsAmount);
   } catch (e) {
     notifyError("Something Wrong");
     return initialLessons;

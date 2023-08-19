@@ -38,10 +38,12 @@ export const updatePriceDB = async (
 
 export const updateCurrentSumDB = async (
   newSum: Pick<ISum, "currentSum">,
+  userId: string,
   cb: () => void
 ) => {
   try {
-    await updateDoc(doc(db, "sum", "tK7romW0nc7zx4jTkdXp"), newSum);
+    console.log(newSum);
+    await updateDoc(doc(db, "sum", userId), newSum);
     cb();
   } catch (e) {
     notifyError("Something Wrong");

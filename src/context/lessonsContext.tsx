@@ -11,6 +11,7 @@ import {
   getLessonsAmountDB,
   getLessonsDB,
   updateIsPaidForLessonDB,
+  updateLessonsAmount,
 } from "../api/lessons";
 import { useSumContext } from "./sumContext";
 import { getCurrentDate } from "../utils/getCurrentDate";
@@ -56,13 +57,17 @@ export const LessonsProvider = ({ children }: IProps) => {
       id: `id-${date}`,
       date,
       currentSum: sum,
-      isPaid: sum >= 0 ? true : false,
+      isPaid: sum > 0 ? true : false,
       price: priceForLesson,
     };
-    await addLessonDB(lesson);
-    updateCurrentSum(lesson.currentSum);
-    setLessons([...lessons, lesson]);
-    notifySuccess(`Lesson successfully added for ${date}`);
+    if (user) {
+      const newLessonsAmount = { lessonsAmount: lessonsAmount + 1 };
+      await addLessonDB(lesson, user.uid);
+      updateLessonsAmount(newLessonsAmount, user.uid);
+      updateCurrentSum(lesson.currentSum);
+      setLessons([...lessons, lesson]);
+      notifySuccess(`Lesson successfully added for ${date}`);
+    }
   };
 
   const getLessons = async (id: string) => {

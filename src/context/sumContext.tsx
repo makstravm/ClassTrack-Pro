@@ -58,9 +58,11 @@ export const SumProvider = ({ children }: IProps) => {
   };
 
   const updateCurrentSum = async (currentSum: number) => {
-    await updateCurrentSumDB({ currentSum }, () =>
-      setSum({ ...sum, currentSum })
-    );
+    if (user) {
+      await updateCurrentSumDB({ currentSum }, user.uid, () =>
+        setSum({ ...sum, currentSum })
+      );
+    }
   };
 
   const addFunds = async (amount: number) => {
@@ -78,7 +80,7 @@ export const SumProvider = ({ children }: IProps) => {
     if (user) {
       getSum(user.uid);
     }
-  }, []);
+  }, [user]);
 
   return (
     <SumContext.Provider
