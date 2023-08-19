@@ -52,9 +52,11 @@ export const SumProvider = ({ children }: IProps) => {
   };
 
   const updatePrice = async (val: number) => {
-    await updatePriceDB({ priceForLesson: val }, () =>
-      setSum({ ...sum, priceForLesson: val })
-    );
+    if (user) {
+      await updatePriceDB({ priceForLesson: val }, user.uid, () =>
+        setSum({ ...sum, priceForLesson: val })
+      );
+    }
   };
 
   const updateCurrentSum = async (currentSum: number) => {
