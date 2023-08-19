@@ -8,7 +8,7 @@ import {
   OutlinedInput,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { FieldsTypes } from "../constant/fieldsTypes";
+import { FieldsTypes } from "../constant/enums";
 import { PasswordFieldErrorType, PasswordFieldTouchedType } from "../types";
 
 export interface IProps {

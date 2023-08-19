@@ -1,12 +1,6 @@
 import { FormikErrors, FormikTouched } from "formik";
 import * as Yup from "yup";
 
-export enum RoutePath {
-  HOME = "/",
-  LOGIN = "/login",
-  SUCCESS_SIGN_IN = "/success-sign-in",
-  REGISTER = "/register",
-}
 export interface ISum {
   currentSum: number;
   priceForLesson: number;

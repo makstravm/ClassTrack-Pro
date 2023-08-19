@@ -46,12 +46,9 @@ export const SumProvider = ({ children }: IProps) => {
   const { user } = useUserContext();
   const [sum, setSum] = useState<ISum>(initialSum);
 
-  const getSum = async () => {
-    if (user) {
-      const res = await getSumDB(user.uid);
-      console.log(res);
-      // setSum(res);
-    }
+  const getSum = async (id: string) => {
+    const res = await getSumDB(id);
+    setSum(res);
   };
 
   const updatePrice = async (val: number) => {
@@ -78,7 +75,9 @@ export const SumProvider = ({ children }: IProps) => {
   };
 
   useEffect(() => {
-    getSum();
+    if (user) {
+      getSum(user.uid);
+    }
   }, []);
 
   return (

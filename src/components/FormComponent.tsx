@@ -19,10 +19,9 @@ import {
   FormFieldType,
   InitialSchemaFormType,
   InitialValuesFormType,
-  RoutePath,
 } from "../types";
 import PasswordField from "./PasswordField";
-import { FieldsTypes } from "../constant/fieldsTypes";
+import { FieldsTypes, RoutePath } from "../constant/enums";
 import { addNewUserCollectionDB } from "../api/lessons";
 
 export type Props = {
