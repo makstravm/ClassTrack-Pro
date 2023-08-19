@@ -27,8 +27,8 @@ export const updateLessonsAmount = async (
   lessonsAmount: ILessonsAmount,
   userId: string
 ) => {
+  console.log("first)", lessonsAmount);
   try {
-    console.log(lessonsAmount);
     await setDoc(doc(db, `lessonsStore`, userId), lessonsAmount);
   } catch (e) {
     notifyError("Something Wrong");
@@ -36,9 +36,9 @@ export const updateLessonsAmount = async (
   }
 };
 
-export const delLessonDB = async (lesson: ILessons) => {
+export const delLessonDB = async (lesson: ILessons, userId: string) => {
   try {
-    await deleteDoc(doc(db, "lessons", lesson.id));
+    await deleteDoc(doc(db, `lessonsStore/${userId}/lessonsList`, lesson.id));
   } catch (e) {
     notifyError("Something Wrong");
     return initialLessons;
@@ -65,9 +65,15 @@ export const getLessonsAmountDB = async (id: string) => {
   return { lessonsAmount: 0 };
 };
 
-export const updateIsPaidForLessonDB = async ({ id, ...rest }: ILessons) => {
+export const updateIsPaidForLessonDB = async (
+  { id, ...rest }: ILessons,
+  userId: string
+) => {
   try {
-    await setDoc(doc(db, "lessons", id), { ...rest });
+    await setDoc(doc(db, `lessonsStore/${userId}/lessonsList`, id), {
+      id,
+      ...rest,
+    });
   } catch (e) {
     notifyError("Something Wrong");
     return initialLessons;
