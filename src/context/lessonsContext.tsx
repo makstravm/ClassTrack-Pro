@@ -18,6 +18,7 @@ import { getCurrentDate } from "../utils/getCurrentDate";
 import { ILessons } from "../types";
 import { notifySuccess } from "../utils/toast";
 import { useUserContext } from "./userContext";
+import { parseDate } from "../utils/parseDate";
 
 interface IProps {
   children: ReactNode;
@@ -75,8 +76,14 @@ export const LessonsProvider = ({ children }: IProps) => {
     const { lessonsAmount } = await getLessonsAmountDB(id);
     if (lessonsAmount) {
       const res = await getLessonsDB(id);
-      setLessons(res);
+
+      setLessons(
+        res.sort(
+          (a: ILessons, b: ILessons) => +parseDate(a.date) - +parseDate(b.date)
+        )
+      );
     }
+
     setLessonsAmount(lessonsAmount);
   };
 
