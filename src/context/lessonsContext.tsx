@@ -14,9 +14,8 @@ import {
   updateLessonsAmount,
 } from "../api/lessons";
 import { useSumContext } from "./sumContext";
-import { getCurrentDate } from "../utils/getCurrentDate";
 import { ILessons } from "../types";
-import { notifySuccess } from "../utils/toast";
+import { notifyError, notifySuccess } from "../utils/toast";
 import { useUserContext } from "./userContext";
 import { parseDate } from "../utils/parseDate";
 
@@ -26,7 +25,7 @@ interface IProps {
 
 interface ILessonsContext {
   lessons: ILessons[];
-  addLesson: () => void;
+  addLesson: (date: string) => void;
   delLesson: (lesson: ILessons) => void;
   updateIsPaidForLesson: (par: number) => void;
 }
@@ -51,8 +50,7 @@ export const LessonsProvider = ({ children }: IProps) => {
   } = useSumContext();
   const { user } = useUserContext();
 
-  const addLesson = async () => {
-    const date = getCurrentDate();
+  const addLesson = async (date: string) => {
     const sum = currentSum - priceForLesson;
     const lesson = {
       id: `id-${date}`,
@@ -61,7 +59,9 @@ export const LessonsProvider = ({ children }: IProps) => {
       isPaid: sum > 0 ? true : false,
       price: priceForLesson,
     };
-    if (user) {
+
+    const isLessonExist = lessons.find((l) => l.date === date);
+    if (user && !isLessonExist) {
       const newLessonsAmount = lessonsAmount + 1;
       await addLessonDB(lesson, user.uid);
       await updateLessonsAmount({ lessonsAmount: newLessonsAmount }, user.uid);
@@ -69,6 +69,9 @@ export const LessonsProvider = ({ children }: IProps) => {
       setLessons([...lessons, lesson]);
       setLessonsAmount(newLessonsAmount);
       notifySuccess(`Lesson successfully added for ${date}`);
+    }
+    if (isLessonExist) {
+      notifyError(`The lesson already exists. Choose the right date.`);
     }
   };
 
@@ -79,7 +82,7 @@ export const LessonsProvider = ({ children }: IProps) => {
 
       setLessons(
         res.sort(
-          (a: ILessons, b: ILessons) => +parseDate(a.date) - +parseDate(b.date)
+          (a: ILessons, b: ILessons) => +parseDate(b.date) - +parseDate(a.date)
         )
       );
     }

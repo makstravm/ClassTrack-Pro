@@ -88,9 +88,16 @@ export const LessonsListWrapper = () => {
   return (
     <Box boxShadow={"0px 0px 12px #d7ffd3"}>
       <Lesson />
-      <Box style={{ height: "65vh", overflowY: "scroll" }}>
+      <Box
+        style={{
+          height: "65vh",
+          overflowY: "scroll",
+        }}
+      >
         {!!lessons.length ? (
-          lessons.map((l, i) => <Lesson key={l.id} index={i + 1} lesson={l} />)
+          lessons.map((l, i) => (
+            <Lesson key={l.id} index={lessons.length - i} lesson={l} />
+          ))
         ) : (
           <div>Oops.... you don't have any lessons yet</div>
         )}

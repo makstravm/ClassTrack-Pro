@@ -1,24 +1,31 @@
-import { useMemo } from "react";
-import { Box, Button } from "@mui/material";
+import { useMemo, useState, useEffect } from "react";
+import { Box, Button, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useLessonsContext } from "../context/lessonsContext";
 import { Modal } from "./Modal";
 import { getCurrentDate } from "../utils/getCurrentDate";
 import useModal from "../hooks/useModal";
+import { MyDatePicker } from "./DatePicker";
 
 export const AddLessonBtn = () => {
   const { addLesson, lessons } = useLessonsContext();
+  const [date, setDate] = useState<string>("");
   const { show, isVisible, hide } = useModal();
-  const date = getCurrentDate();
+  const currentDate = useMemo(() => getCurrentDate(), []);
   const handleOnClick = () => {
-    addLesson();
+    addLesson(date);
     hide();
   };
 
+  useEffect(() => {
+    setDate(currentDate);
+  }, [currentDate]);
+
   const isDisabled = useMemo(
-    () => lessons.find((l) => l.date === date),
-    [lessons, date]
+    () => lessons.find((l) => l.date === currentDate),
+    [lessons, currentDate]
   );
+
   return (
     <Box textAlign={"center"} py={2}>
       <Button
@@ -31,13 +38,29 @@ export const AddLessonBtn = () => {
         Add Lesson
       </Button>
       <Modal
-        title={`Lesson -  ${date}`}
-        content={`Do you really want to add a lesson for ${date}?`}
+        title={`Lesson -  #${lessons.length + 1}`}
         titleBtnAgree="Add lesson"
         onClick={handleOnClick}
         isVisible={isVisible}
         hide={hide}
-      />
+      >
+        <Box display={"flex"} alignItems={"center"}>
+          <Typography component={"span"} pr={2}>
+            Do you really want to add a lesson for
+          </Typography>
+          <Box
+            width={200}
+            display={"flex"}
+            alignItems={"center"}
+            flexWrap="nowrap"
+          >
+            <MyDatePicker onChangeDate={setDate} />
+            <Typography component={"span"} pl={1}>
+              ?
+            </Typography>
+          </Box>
+        </Box>
+      </Modal>
     </Box>
   );
 };
