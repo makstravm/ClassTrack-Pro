@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 import {
   Button,
   Dialog,
@@ -11,7 +11,7 @@ import {
 interface IProps {
   title: string;
   titleBtnAgree: string;
-  content: string;
+  content?: string | ReactElement;
   isVisible: boolean;
   onClick: () => void;
   hide: () => void;
