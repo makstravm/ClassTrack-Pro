@@ -66,7 +66,11 @@ export const LessonsProvider = ({ children }: IProps) => {
       await addLessonDB(lesson, user.uid);
       await updateLessonsAmount({ lessonsAmount: newLessonsAmount }, user.uid);
       updateCurrentSum(lesson.currentSum);
-      setLessons([...lessons, lesson]);
+      setLessons(
+        [...lessons, lesson].sort(
+          (a: ILessons, b: ILessons) => +parseDate(b.date) - +parseDate(a.date)
+        )
+      );
       setLessonsAmount(newLessonsAmount);
       notifySuccess(`Lesson successfully added for ${date}`);
     }

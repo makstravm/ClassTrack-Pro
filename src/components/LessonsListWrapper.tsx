@@ -58,21 +58,21 @@ const Lesson = (props: IProps) => {
       }}
     >
       <Grid container spacing={3} justifyContent={"space-around"}>
-        <Grid item width={100} textAlign={"center"}>
+        <Grid item xs={1} textAlign={"center"}>
           {index ? index : <NumbersIcon />}
         </Grid>
-        <Grid item width={100} textAlign={"center"}>
+        <Grid item xs={2} textAlign={"center"}>
           {lesson?.date ? lesson?.date : "Date"}
         </Grid>
-        <Grid item width={75} textAlign={"center"}>
+        <Grid item md={1} sm={0} textAlign={"center"}>
           {lesson?.price ? lesson?.price : "Price"}
         </Grid>
-        <Grid item width={100} textAlign={"center"}>
+        <Grid item xs={1} textAlign={"center"}>
           {typeof lesson?.currentSum === "number"
             ? lesson?.currentSum
             : "Total"}
         </Grid>
-        <Grid item width={75} textAlign={"center"}>
+        <Grid item xs={1} textAlign={"center"}>
           {!index ? "isPaid" : icon}
         </Grid>
         {isHover && lesson?.date && (
