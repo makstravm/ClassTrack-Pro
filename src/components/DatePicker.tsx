@@ -14,10 +14,10 @@ export const MyDatePicker = ({ onChangeDate }: Props) => {
   const [newDate, setNewDate] = useState<string | null>(null);
   const handleOnChange = (value: any) => {
     const formattedDate = value.$d.toLocaleDateString("ru-RU");
-    setNewDate(newDate);
+    setNewDate(value);
     onChangeDate(formattedDate);
   };
-
+  console.log(dayjs(newDate || new Date()));
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
       <DatePicker
